@@ -294,6 +294,8 @@ else:
         if(MC):
             print "[INFO] Using GT START72_V1" 
             process.GlobalTag.globaltag = 'START72_V1::All'
+        else:
+            process.GlobalTag.globaltag = 'GR_R_62_V3::All'
     else:
         print "[ERROR]::Global Tag not set for CMSSW_VERSION: ", CMSSW_VERSION
         sys.exit(1)
@@ -573,6 +575,7 @@ if (re.match("CMSSW_7_.*_.*",CMSSW_VERSION)):
     "))"
     )
     
+  process.patElectrons.userData.userFloats.src = []
 
 
 process.pathZElectronSkimGen = cms.Path(process.filterSeq * process.FilterSeq *
