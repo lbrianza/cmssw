@@ -142,6 +142,7 @@ process.load('Calibration.EcalAlCaRecoProducers.ALCARECOEcalUncalIsolElectron_Ou
 
 #process.load('Configuration.StandardSequences.AlCaRecoStreams_cff') # this is for official ALCARAW ALCARECO production
 process.load('Calibration.EcalAlCaRecoProducers.ALCARECOEcalCalIsolElectron_cff') # reduction of recHits
+process.load('Calibration.EcalAlCaRecoProducers.ALCARECOEcalUncalIsolElectron_cff') # ALCARAW
 process.load("Calibration.EcalAlCaRecoProducers.PUDumper_cfi")
 if (re.match("CMSSW_5_.*",CMSSW_VERSION) or re.match("CMSSW_6_.*",CMSSW_VERSION)):
     process.load('Calibration.EcalAlCaRecoProducers.ALCARECOEcalUncalIsolElectron_cff') # ALCARAW
@@ -289,6 +290,10 @@ else:
             process.GlobalTag.globaltag = 'GR_R_62_V3::All'
             if(options.files==""):
                 process.source.fileNames=[ 'root://cms-xrd-global.cern.ch//store/data/Run2012D/DoubleElectron/AOD/15Apr2014-v1/00000/0EA11D35-0CD5-E311-862E-0025905A6070.root' ]
+    elif(re.match("CMSSW_7_3_.*", CMSSW_VERSION)):
+        if(MC):
+            print "[INFO] Using GT START72_V1" 
+            process.GlobalTag.globaltag = 'START72_V1::All'
     else:
         print "[ERROR]::Global Tag not set for CMSSW_VERSION: ", CMSSW_VERSION
         sys.exit(1)
@@ -327,7 +332,7 @@ if(MC):
         "TFileService",
         fileName = cms.string("PUDumper.root")
         )
-    process.PUDumperSeq *= process.PUDumper
+    #process.PUDumperSeq *= process.PUDumper
     
 process.load('Calibration.EcalAlCaRecoProducers.WZElectronSkims_cff')
 
@@ -452,7 +457,7 @@ process.outputALCARAW = cms.OutputModule("PoolOutputModule",
 process.outputALCARECO = cms.OutputModule("PoolOutputModule",
                                           # after 5 GB split the file
                                           maxSize = cms.untracked.int32(5120000),
-                                          outputCommands = process.OutALCARECOEcalCalElectron_.outputCommands,
+                                          outputCommands = process.OutALCARECOEcalCalElectron.outputCommands,
                                           fileName = cms.untracked.string('alcareco.root'),
                                           SelectEvents = process.OutALCARECOEcalCalElectron.SelectEvents,
                                           dataset = cms.untracked.PSet(
@@ -466,7 +471,7 @@ process.zNtupleDumper.SelectEvents = process.NtupleFilter.HLTPaths
 process.outputALCARERECO = cms.OutputModule("PoolOutputModule",
                                           # after 5 GB split the file
                                           maxSize = cms.untracked.int32(5120000),
-                                          outputCommands = process.OutALCARECOEcalCalElectron_.outputCommands,
+                                          outputCommands = process.OutALCARECOEcalCalElectron.outputCommands,
                                           fileName = cms.untracked.string('alcarereco.root'),
                                           SelectEvents = cms.untracked.PSet(
     SelectEvents = cms.vstring('pathALCARERECOEcalCalElectron')
@@ -614,21 +619,21 @@ if (re.match("CMSSW_7_.*",CMSSW_VERSION)):
     process.pathALCARECOEcalUncalSingleElectron = cms.Path(process.PUDumperSeq * process.filterSeq *
                                                        process.pfIsoEgamma *
                                                        (process.ALCARECOEcalCalElectronPreSeq +
-                                                        uncalibRecHitSeq ))
+                                                        process.uncalibRecHitSeq ))
     process.pathALCARECOEcalUncalZElectron = cms.Path( process.PUDumperSeq * process.filterSeq * process.FilterSeq *
                                                    process.pfIsoEgamma *
                                                    (process.ALCARECOEcalCalElectronPreSeq +
-                                                    uncalibRecHitSeq ))
+                                                    process.uncalibRecHitSeq ))
     process.pathALCARECOEcalUncalZSCElectron = cms.Path( process.PUDumperSeq * process.filterSeq * process.FilterSeq *
                                                      process.pfIsoEgamma *
                                                      ~process.ZeeFilter * process.ZSCFilter *
                                                      (process.ALCARECOEcalCalElectronPreSeq +
-                                                      uncalibRecHitSeq ))
+                                                      process.uncalibRecHitSeq ))
     process.pathALCARECOEcalUncalWElectron = cms.Path( process.PUDumperSeq * process.filterSeq * process.FilterSeq *
                                                    process.pfIsoEgamma *
                                                    ~process.ZeeFilter * ~process.ZSCFilter * process.WenuFilter *
                                                    (process.ALCARECOEcalCalElectronPreSeq +
-                                                    uncalibRecHitSeq ))
+                                                    process.uncalibRecHitSeq ))
 
 else:
 

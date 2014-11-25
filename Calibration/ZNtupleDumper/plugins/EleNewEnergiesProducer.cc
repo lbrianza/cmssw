@@ -71,15 +71,15 @@
 #include "RecoEgamma/EgammaTools/interface/ConversionInfo.h"
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 
-
+#ifndef CMSSW_7_2_X
 // Josh's regression
-#include "../interface/EGEnergyCorrector_fra.h" 
+//#include "../interface/EGEnergyCorrector_fra.h" 
 #include "RecoEgamma/EgammaTools/interface/EGEnergyCorrector.h"
 
 //#include "RecoEcal/EgammaCoreTools/interface/EcalClusterLazyTools.h"
 #include "HiggsAnalysis/GBRLikelihoodEGTools/interface/EGEnergyCorrectorSemiParm.h"
 //#include "DataFormats/EgammaCandidates/interface/Photon.h"
-
+#endif
 //
 // class declaration
 //
@@ -147,10 +147,11 @@ private:
   edm::Handle<std::vector< PileupSummaryInfo > >  PupInfo;
   edm::Handle<reco::ConversionCollection> conversionsHandle;
 
+#ifndef CMSSW_7_2_X
   //------------------------------ Josh's regression (Hgg)
   EGEnergyCorrector       josh_Ele;
   EGEnergyCorrector       josh_Pho;
-  EGEnergyCorrector_fra    fra_Ele;
+  //EGEnergyCorrector_fra    fra_Ele;
 
 
   std::string regrEleFile; //weights
@@ -196,6 +197,7 @@ private:
   EGEnergyCorrectorSemiParm cor7TeVtrainV8_pho;
   std::string regrEleJoshV8_SemiParam7TeVtrainFile;
   std::string regrPhoJoshV8_SemiParam7TeVtrainFile;
+#endif
 
   bool ptSplit;
 };
@@ -229,6 +231,7 @@ EleNewEnergiesProducer::EleNewEnergiesProducer(const edm::ParameterSet& iConfig)
   rhoTAG(iConfig.getParameter<edm::InputTag>("rhoFastJet")),
   conversionsProducerTAG(iConfig.getParameter<edm::InputTag>("conversionCollection")),
   //  foutName(iConfig.getParameter<std::string>("foutName")),
+#ifndef CMSSW_7_2_X
   regrEleFile(iConfig.getParameter<std::string>("regrEleFile")),
   regrPhoFile(iConfig.getParameter<std::string>("regrPhoFile")),
   regrEleFile_fra(iConfig.getParameter<std::string>("regrEleFile_fra")),
@@ -248,9 +251,10 @@ EleNewEnergiesProducer::EleNewEnergiesProducer(const edm::ParameterSet& iConfig)
   regrPhoJoshV7_SemiParam7TeVtrainFile(iConfig.getParameter<std::string>("regrPhoJoshV7_SemiParam7TeVtrainFile")),
   regrEleJoshV8_SemiParam7TeVtrainFile(iConfig.getParameter<std::string>("regrEleJoshV8_SemiParam7TeVtrainFile")),
   regrPhoJoshV8_SemiParam7TeVtrainFile(iConfig.getParameter<std::string>("regrPhoJoshV8_SemiParam7TeVtrainFile")),
-
+#endif
   ptSplit(iConfig.getParameter<bool>("ptSplit"))
 {
+#ifndef CMSSW_7_2_X
    //register your products
 /* Examples
    produces<ExampleData2>();
@@ -430,7 +434,7 @@ EleNewEnergiesProducer::EleNewEnergiesProducer(const edm::ParameterSet& iConfig)
   produces< NewEnergyMap >("energySCEleJoshPhoSemiParam7TeVtrainV8pdfval");
 
  //now do what ever other initialization is needed
-  
+#endif  
 }
 
 
@@ -452,24 +456,7 @@ void
 EleNewEnergiesProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
    using namespace edm;
-/* This is an event example
-   //Read 'ExampleData' from the Event
-   Handle<ExampleData> pIn;
-   iEvent.getByLabel("example",pIn);
-
-   //Use the ExampleData to create an ExampleData2 which 
-   // is put into the Event
-   std::auto_ptr<ExampleData2> pOut(new ExampleData2(*pIn));
-   iEvent.put(pOut);
-*/
-
-
-/* this is an EventSetup example
-   //Read SetupData from the SetupRecord in the EventSetup
-   ESHandle<SetupData> pSetup;
-   iSetup.get<SetupRecord>().get(pSetup);
-*/
-
+#ifndef CMSSW_7_2_X
    std::vector<v_t>  energySCEleJoshEle;
    std::vector<v_t>  energySCEleJoshEleVar;
    std::vector<v_t>  energySCEleJoshPho;
@@ -1643,13 +1630,14 @@ EleNewEnergiesProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetu
   iEvent.put(energySCEleJoshPhoSemiParam7TeVtrainV8_alpha2_Map,      "energySCEleJoshPhoSemiParam7TeVtrainV8alpha2");
   iEvent.put(energySCEleJoshPhoSemiParam7TeVtrainV8_gamma2_Map,      "energySCEleJoshPhoSemiParam7TeVtrainV8gamma2");
   iEvent.put(energySCEleJoshPhoSemiParam7TeVtrainV8_pdfval_Map,      "energySCEleJoshPhoSemiParam7TeVtrainV8pdfval");
-  
+#endif  
 }
 
 // ------------ method called once each job just before starting event loop  ------------
 void 
 EleNewEnergiesProducer::beginJob()
 {
+#ifndef CMSSW_7_2_X
   if (!corV4_ele.IsInitialized()) {
     std::cout << "[STATUS] Initializing V4 regrEle: " << regrEleJoshV4_SemiParamFile << std::endl;
     corV4_ele.Initialize(regrEleJoshV4_SemiParamFile, 4); //"/afs/cern.ch/user/b/bendavid/CMSSWhgg/CMSSW_5_3_11_patch5/src/HiggsAnalysis/GBRLikelihoodEGTools/data/regweights_v4_forest_ph.root");
@@ -1724,7 +1712,7 @@ EleNewEnergiesProducer::beginJob()
     std::cout << "[STATUS] Initializing V8 regrPho: " << regrPhoJoshV8_SemiParam7TeVtrainFile << std::endl;
     cor7TeVtrainV8_pho.Initialize(regrPhoJoshV8_SemiParam7TeVtrainFile, 8); 
   }
-
+#endif
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
@@ -1736,6 +1724,7 @@ EleNewEnergiesProducer::endJob() {
 void 
 EleNewEnergiesProducer::beginRun(edm::Run&, edm::EventSetup const& iSetup)
 {
+#ifndef CMSSW_7_2_X
   bool useDB=false;
   // Initialization of Josh regression: electron-tuned and photon-tuned regression
   //std::cout << "[DEBUG] Initialyze Josh's ele regression: " << regrEleFile <<  std::endl;
@@ -1744,7 +1733,7 @@ EleNewEnergiesProducer::beginRun(edm::Run&, edm::EventSetup const& iSetup)
   josh_Pho.Initialize(iSetup, regrPhoFile);
   //std::cout << "[DEBUG] Initialyze Emanuele's ele regression" << std::endl;
   fra_Ele.Initialize(iSetup, regrEleFile_fra,useDB,ptSplit);
-
+#endif
 
 }
 

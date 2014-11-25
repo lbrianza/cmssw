@@ -19,7 +19,6 @@
 <use   name="CommonTools/UtilAlgos"/>
 <use   name="CalibCalorimetry/CaloMiscalibTools"/>
 <use   name="Calibration/Tools"/>
-<use   name="CondFormats/DataRecord"/>
 <use   name="CondTools/Ecal"/>
 <use   name="DataFormats/EcalDetId"/>
 <use   name="DataFormats/TrackReco"/>

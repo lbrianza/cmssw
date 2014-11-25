@@ -1,4 +1,4 @@
-#include "Calibration/EcalAlCaRecoProducers/plugins/PUDumper.h"
+#include "Calibration/EcalAlCaRecoProducers/interface/PUDumper.h"
 
 
 

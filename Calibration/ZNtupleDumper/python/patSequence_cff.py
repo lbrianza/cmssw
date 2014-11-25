@@ -26,7 +26,7 @@ eleRegressionEnergy.rhoCollection = cms.InputTag('kt6PFJetsForRhoCorrection',"rh
 eleRegressionEnergy.vertexCollection = cms.InputTag('offlinePrimaryVertices')
 
 #------------------------------ electronID producer
-from Calibration.EleSelectionProducers.eleselectionproducers_cfi import *
+from Calibration.ZNtupleDumper.eleselectionproducers_cfi import *
 # process.EleSelectionProducers
 
 #============================== Adding new energies to patElectrons

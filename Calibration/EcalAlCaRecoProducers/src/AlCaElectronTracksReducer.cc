@@ -1,4 +1,4 @@
-#include "Calibration/EcalAlCaRecoProducers/plugins/AlCaElectronTracksReducer.h"
+#include "Calibration/EcalAlCaRecoProducers/interface/AlCaElectronTracksReducer.h"
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/TrackReco/interface/TrackFwd.h"
 

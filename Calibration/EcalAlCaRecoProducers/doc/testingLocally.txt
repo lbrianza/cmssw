@@ -16,9 +16,13 @@ dataset=/QCD_Pt_*_EMEnriched_TuneZ2star_8TeV_pythia6/Summer12_DR53X-PU_RD1_START
 xrdcp root://xrootd.unl.edu//store/mc/Summer12_DR53X/QCD_Pt-40_doubleEMEnriched_TuneZ2star_8TeV-pythia6/AODSIM/PU_RD1_START53_V7N-v1/20000/000107B2-2FD2-E211-9956-00261894397B.root myFile.root
 \endcode
 
- - Only alcareco:
+ - Only alcareco data:
 \code 
 cmsRun python/alcaSkimming.py isCrab=0 type=ALCARECO  doTree=0 maxEvents=300 file=file://myFile.root
+\endcode
+ - Only alcareco MC:
+\code 
+cmsRun python/alcaSkimming.py isCrab=0 type=ALCARECOSIM  doTree=0 maxEvents=300 file=file://myFile.root
 \endcode
  - Alcareco + ntuples
 \code 
@@ -33,5 +37,5 @@ the \code skim=ZSkim \endcode option can be added to select events passing the Z
 
 Filelist:
  - CMSSW_7_0_X: root://cms-xrd-global.cern.ch//store/data/Run2012D/DoubleElectron/AOD/15Apr2014-v1/00000/0EA11D35-0CD5-E311-862E-0025905A6070.root
-
+ - CMSSW_7_2_X: root://xrootd.unl.edu//store/mc/Phys14DR/DYJetsToLL_M-50_13TeV-madgraph-pythia8/AODSIM/PU20bx25_PHYS14_25_V1-v1/00000/00CC714A-F86B-E411-B99A-0025904B5FB8.root
 */
