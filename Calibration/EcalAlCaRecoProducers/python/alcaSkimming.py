@@ -145,8 +145,7 @@ process.load('Calibration.EcalAlCaRecoProducers.ALCARECOEcalCalIsolElectron_cff'
 process.load('Calibration.EcalAlCaRecoProducers.ALCARECOEcalUncalIsolElectron_cff') # ALCARAW
 process.load("Calibration.EcalAlCaRecoProducers.PUDumper_cfi")
 if (re.match("CMSSW_5_.*",CMSSW_VERSION) or re.match("CMSSW_6_.*",CMSSW_VERSION)):
-    process.load('Calibration.EcalAlCaRecoProducers.ALCARECOEcalUncalIsolElectron_cff') # ALCARAW
-    #from Calibration.EcalAlCaRecoProducers.ALCARECOEcalCalIsolElectron_cff import *
+    ecalUncalibRecHitSequence = ecalUncalibRecHitSequence53X
 
 # this module provides:
 #process.seqALCARECOEcalUncalElectron  = uncalibRecHitSeq
@@ -295,7 +294,8 @@ else:
             print "[INFO] Using GT START72_V1" 
             process.GlobalTag.globaltag = 'START72_V1::All'
         else:
-            process.GlobalTag.globaltag = 'GR_R_62_V3::All'
+            print "[INFO] Unsing GT GR_R_62_V3::All"
+            process.GlobalTag.globaltag = 'PHYS14_50_V1::All'
     else:
         print "[ERROR]::Global Tag not set for CMSSW_VERSION: ", CMSSW_VERSION
         sys.exit(1)
