@@ -51,3 +51,13 @@ OutALCARECOEcalUncalElectron.SelectEvents = cms.untracked.PSet(
 #         'drop *EcalRecHit*_reducedEcalRecHitsES*_*_*',
 #         # keep the new alca track collections
 #      ] )
+
+
+
+OutALCARECOEcalCalElectron_rereco = cms.PSet(
+    outputCommands = cms.untracked.vstring( 
+        'drop recoGsfElectron*_gsfElectron*_*_*',
+        'drop recoGsfElectron*_gedGsfElectron*_*_*',
+        'keep recoGsfElectron*_electronRecalibSCAssociator*_*_*'
+        )
+    )

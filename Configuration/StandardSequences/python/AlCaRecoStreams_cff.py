@@ -145,7 +145,7 @@ pathALCARECOEcalCalWElectron = cms.Path( PUDumperSeq * filterSeq *
 pathALCARECOEcalCalZSCElectron = cms.Path( PUDumperSeq *
                                            filterSeq * FilterSeq *
                                            ~ZeeFilter * ZSCFilter * 
-                                           seqALCARECOEcalCalElectron ))
+                                           seqALCARECOEcalCalElectron )
 
 
 pathALCARECOHcalCalDijets = cms.Path(seqALCARECOHcalCalDijets*ALCARECOHcalCalDiJetsDQM)

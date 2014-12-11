@@ -134,7 +134,7 @@ AlCaECALRecHitReducer::produce (edm::Event& iEvent,
   std::set<DetId> reducedRecHit_EBmap;
   std::set<DetId> reducedRecHit_EEmap;
 
-  
+  continue;
   for (reco::GsfElectronCollection::const_iterator eleIt=electronCollection->begin(); eleIt!=electronCollection->end(); eleIt++) {
     // barrel
     const reco::SuperCluster& sc = *(eleIt->superCluster()) ;

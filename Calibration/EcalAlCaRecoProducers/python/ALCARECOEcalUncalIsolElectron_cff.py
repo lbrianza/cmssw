@@ -7,9 +7,10 @@ from Configuration.StandardSequences.RawToDigi_Data_cff import *
 from RecoLocalCalo.Configuration.RecoLocalCalo_cff import *
 from RecoLocalCalo.EcalRecProducers.ecalGlobalUncalibRecHit_cfi import *
 
-ecalUncalibRecHitSequence = cms.Sequence(ecalGlobalUncalibRecHit * ecalDetIdToBeRecovered)
+#ecalUncalibRecHitSequence = cms.Sequence(ecalGlobalUncalibRecHit * ecalDetIdToBeRecovered)
 ecalUncalibRecHitSequence53X = cms.Sequence(ecalGlobalUncalibRecHit * ecalDetIdToBeRecovered)
         
+uncalibRecHitSeq53X = cms.Sequence( (ecalDigis + ecalPreshowerDigis) * ecalUncalibRecHitSequence53X)
 uncalibRecHitSeq = cms.Sequence( (ecalDigis + ecalPreshowerDigis) * ecalUncalibRecHitSequence)
 
 seqALCARECOEcalUncalElectron = cms.Sequence( uncalibRecHitSeq )
