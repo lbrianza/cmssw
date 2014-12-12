@@ -17,6 +17,7 @@
 //
 // Original Author:  Lorenzo AGOSTINO
 //         Created:  Mon Jul 17 18:07:01 CEST 2006
+// $Id: AlCaECALRecHitReducer.h,v 1.13 2010/02/11 00:10:34 wmtan Exp $
 //
 //
 
@@ -32,6 +33,10 @@
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/Utilities/interface/InputTag.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
+
+#include "DataFormats/EgammaReco/interface/SuperClusterFwd.h"
+#include "DataFormats/DetId/interface/DetId.h"
+#include "Geometry/CaloTopology/interface/CaloTopology.h"
 
 //PG #include "TH2.h"
 //PG #include "TFile.h"
@@ -79,20 +84,26 @@ class AlCaECALRecHitReducer : public edm::EDProducer {
   edm::InputTag eeRecHitsLabel_;
   edm::InputTag esRecHitsLabel_;
   edm::InputTag electronLabel_;
+  edm::InputTag EESuperClusterCollection_;
   std::string alcaBarrelHitsCollection_;
   std::string alcaEndcapHitsCollection_;
   std::string alcaPreshowerHitsCollection_;
   int etaSize_;
   int phiSize_;
-  float weight_;
-  int esNstrips_;
-  int esNcolumns_;
+  //float weight_;
+  //  int esNstrips_;
+  //int esNcolumns_;
 
-  bool selectByEleNum_;
-  int minEleNumber_;
-  double minElePt_;
+  //  bool selectByEleNum_;
+  //  int minEleNumber_;
+  //  double minElePt_;
+  double minEta_highEtaSC_;
 
-//PG  TH2F * m_failMap ;
+  void AddMiniRecHitCollection(const reco::SuperCluster& sc,
+			       std::set<DetId>& reducedRecHitMap,
+			       const CaloTopology *caloTopology
+			       );
+
 
 };
 

@@ -21,7 +21,7 @@ edm::InputSource::ItemType DQMProtobufReader::getNextItemType() {
   typedef DQMFileIterator::State State;
   typedef DQMFileIterator::LumiEntry LumiEntry;
 
-  fiterator_.logFileAction("getNextItemType");
+  //fiterator_.logFileAction("getNextItemType");
 
   for (;;) {
     fiterator_.update_state();
@@ -40,6 +40,7 @@ edm::InputSource::ItemType DQMProtobufReader::getNextItemType() {
 
     // skip to the next file if we have no files openned yet
     if (fiterator_.lumiReady()) {
+
       return InputSource::IsLumi;
     }
 
@@ -54,26 +55,15 @@ edm::InputSource::ItemType DQMProtobufReader::getNextItemType() {
 }
 
 std::shared_ptr<edm::RunAuxiliary> DQMProtobufReader::readRunAuxiliary_() {
-  fiterator_.logFileAction("readRunAuxiliary_");
+  //fiterator_.logFileAction("readRunAuxiliary_");
 
   edm::RunAuxiliary* aux = new edm::RunAuxiliary(
       fiterator_.runNumber(), edm::Timestamp(), edm::Timestamp());
   return std::shared_ptr<edm::RunAuxiliary>(aux);
-};
-
-std::shared_ptr<edm::LuminosityBlockAuxiliary>
-DQMProtobufReader::readLuminosityBlockAuxiliary_() {
-  fiterator_.logFileAction("readLuminosityBlockAuxiliary_");
-
-  edm::LuminosityBlockAuxiliary* aux = new edm::LuminosityBlockAuxiliary(
-      fiterator_.runNumber(), fiterator_.front().ls, edm::Timestamp(),
-      edm::Timestamp());
-
-  return std::shared_ptr<edm::LuminosityBlockAuxiliary>(aux);
-};
+}
 
 void DQMProtobufReader::readRun_(edm::RunPrincipal& rpCache) {
-  fiterator_.logFileAction("readRun_");
+  //fiterator_.logFileAction("readRun_");
   rpCache.fillRunPrincipal(processHistoryRegistryForUpdate());
 
   edm::Service<DQMStore> store;
@@ -83,10 +73,22 @@ void DQMProtobufReader::readRun_(edm::RunPrincipal& rpCache) {
   }
 }
 
+std::shared_ptr<edm::LuminosityBlockAuxiliary>
+DQMProtobufReader::readLuminosityBlockAuxiliary_() {
+  //fiterator_.logFileAction("readLuminosityBlockAuxiliary_");
+
+  currentLumi_ = fiterator_.open();
+  edm::LuminosityBlockAuxiliary* aux = new edm::LuminosityBlockAuxiliary(
+      fiterator_.runNumber(), currentLumi_.file_ls, edm::Timestamp(),
+      edm::Timestamp());
+
+  return std::shared_ptr<edm::LuminosityBlockAuxiliary>(aux);
+}
+
 void DQMProtobufReader::readLuminosityBlock_(
     edm::LuminosityBlockPrincipal& lbCache) {
 
-  fiterator_.logFileAction("readLuminosityBlock_");
+  //fiterator_.logFileAction("readLuminosityBlock_");
   edm::Service<DQMStore> store;
 
   edm::Service<edm::JobReport> jr;
@@ -104,11 +106,11 @@ void DQMProtobufReader::readLuminosityBlock_(
   }
 
   // load the new file
-  const DQMFileIterator::LumiEntry& lumi = fiterator_.front();
-  std::string p = fiterator_.make_path_data(lumi);
+  std::string p = fiterator_.make_path(currentLumi_.datafn);
+
   if (!boost::filesystem::exists(p)) {
     fiterator_.logFileAction("Data file is missing ", p);
-    fiterator_.pop();
+    fiterator_.logLumiState(currentLumi_, "error: data file missing");
     return;
   }
 
@@ -116,7 +118,8 @@ void DQMProtobufReader::readLuminosityBlock_(
   fiterator_.logFileAction("Successfully opened file ", p);
   store->load(p);
   fiterator_.logFileAction("Closed file ", p);
-  fiterator_.pop();
+
+  fiterator_.logLumiState(currentLumi_, "closed: ok");
 };
 
 void DQMProtobufReader::readEvent_(edm::EventPrincipal&) {};

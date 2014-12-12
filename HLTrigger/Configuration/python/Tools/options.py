@@ -77,6 +77,7 @@ class HLTProcessOptions(object):
     self.globaltag  = None        # (*) if set, override the GlobalTag
     self.l1         = None        # (*) if set, override the L1 menu
     self.l1Xml      = None        # (*) if set, override the L1 menu Xml
+    self.l1skim     = False       # (*) if set, add snippet to process L1 skim files done with new L1, ignoring old L1
     self.emulator   = None        # (*) if set, run (part of) the L1 emulator instead of taking the L1 results from the data
     self.prescale   = None        # (*) if set, force the use of a specific prescale column. If set to "none", unprescale all paths
     self.open       = False       #     if set, cms.ignore all filters, making all paths run on and accept all events
@@ -84,11 +85,13 @@ class HLTProcessOptions(object):
     self.profiling  = False       #     if set, instrument the menu for profiling measurements
     self.timing     = False       #     if set, instrument the menu for timing measurements (implies profiling)
     self.paths      = None        #     if set, include in the dump only the given paths (wildcards are supported)
-    self.input      = None        # (*) if set, run on a specific input file
+    self.input      = None        # (*) if set, specify the input file(s) or dataset
+    self.parent     = None        # (*) if set, specify the parent input file(s) or dataset
     self.events     = 100         # (*) run on these many events
     self.output     = 'all'       # (*) output 'all', 'minimal' or 'none' output modules
     self.fragment   = False       #     prepare a configuration fragment (true) or a whole process (false)
     self.fastsim    = False       #     prepare a configuration fragment suitable for FastSim
+    self.hilton     = False       #     prepare a configuration for running with hilton-like modules
 
 
   # convert HLT and L1 menus to a dedicated object representation on the fly

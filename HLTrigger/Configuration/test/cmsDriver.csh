@@ -83,7 +83,7 @@ foreach gtag ( MC DATA )
     continue
   endif
 
-  foreach table ( FULL Fake 2014 GRun HIon PIon )
+  foreach table ( FULL Fake GRun HIon PIon )
 
     set name = ${table}_${gtag}  
 
@@ -104,18 +104,6 @@ foreach gtag ( MC DATA )
       set XHLT = HLT:Fake
       set GTAG = ${BASE1}_Fake
       set RTAG = ${BASE1RD}_Fake
-      set NN   = $NNPP
-      set SCEN = pp
-      set InputGenSim = $InputGenSimGRun1
-      set InputLHCRaw = $InputLHCRawGRun
-      set Custom1 = $CustomRun1
-      set Custom2 = " "
-      set L1REPACK = L1REPACK
-    else if ( $table == 2014 ) then
-      set XL1T = $XL1TPP2
-      set XHLT = HLT:2014
-      set GTAG = ${BASE1}_2014
-      set RTAG = ${BASE1RD}_2014
       set NN   = $NNPP
       set SCEN = pp
       set InputGenSim = $InputGenSimGRun1
@@ -182,7 +170,7 @@ foreach gtag ( MC DATA )
 
     echo
     echo "Creating DigiL1Raw $name"
-    cmsDriver.py RelVal                --step=DIGI,L1,DIGI2RAW                     --conditions=$GTAG --filein=$InputGenSim                        --custom_conditions=$XL1T  --fileout=RelVal_DigiL1Raw_$name.root    --number=$NN $DATAMC --no_exec --datatier 'GEN-SIM-DIGI-RAW'      --eventcontent=RAW          --customise=HLTrigger/Configuration/CustomConfigs.L1T     --customise=$Custom1 --customise=$Custom2  --scenario=$SCEN --python_filename=RelVal_DigiL1Raw_$name.py
+    cmsDriver.py RelVal                --step=DIGI,L1,DIGI2RAW                     --conditions=$GTAG --filein=$InputGenSim                        --custom_conditions=$XL1T  --fileout=RelVal_DigiL1Raw_$name.root    --number=$NN $DATAMC --no_exec --datatier 'GEN-SIM-DIGI-RAW'      --eventcontent=RAWSIM       --customise=HLTrigger/Configuration/CustomConfigs.L1T     --customise=$Custom1 --customise=$Custom2  --scenario=$SCEN --python_filename=RelVal_DigiL1Raw_$name.py
 
     echo
     echo "Creating DigiL1RawHLT $name"

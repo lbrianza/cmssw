@@ -9,8 +9,9 @@
   </ioread>
 
 
-  <class name="reco::Photon" ClassVersion="13">
+  <class name="reco::Photon" ClassVersion="14">
    <version ClassVersion="13" checksum="2963666409"/>
+   <version ClassVersion="14" checksum="753726370"/>
   </class>
   <class name="reco::Conversion" ClassVersion="11">
    <version ClassVersion="10" checksum="2140222741"/>
@@ -203,10 +204,16 @@
     <![CDATA[mva_e_pi = onfile.mva;]]>
   </ioread>
 
-  <class name="reco::GsfElectron::ClassificationVariables" ClassVersion="11">
+  <class name="reco::GsfElectron::ClassificationVariables" ClassVersion="12">
+   <version ClassVersion="12" checksum="1990926670"/>
    <version ClassVersion="11" checksum="2094185381"/>
   </class>
-  <class name="reco::GsfElectron" ClassVersion="14">
+  <class name="reco::GsfElectron::PixelMatchVariables" ClassVersion="2">
+    <version ClassVersion="2" checksum="3522539867"/>
+  </class>
+  <class name="reco::GsfElectron" ClassVersion="16">
+   <version ClassVersion="16" checksum="1022265405"/>
+   <version ClassVersion="15" checksum="515498629"/>
    <version ClassVersion="14" checksum="3918953183"/>
    <version ClassVersion="13" checksum="2991498573"/>
    <version ClassVersion="12" checksum="2835360780"/>

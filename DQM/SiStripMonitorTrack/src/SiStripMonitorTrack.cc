@@ -106,7 +106,6 @@ void SiStripMonitorTrack::analyze(const edm::Event& e, const edm::EventSetup& es
 
   //initialization of global quantities
   LogDebug("SiStripMonitorTrack") << "[SiStripMonitorTrack::analyse]  " << "Run " << e.id().run() << " Event " << e.id().event() << std::endl;
-  runNb   = e.id().run();
   eventNb = e.id().event();
 //  vPSiStripCluster.clear();
   vPSiStripCluster.clear();
@@ -892,7 +891,7 @@ void SiStripMonitorTrack::fillModMEs(SiStripClusterInfo* cluster,std::string nam
     int PGVposCounter = cluster->maxIndex();
     for (int i= int(conf_.getParameter<edm::ParameterSet>("TProfileClusterPGV").getParameter<double>("xmin"));i<PGVposCounter;++i)
       fillME(iModME->second.ClusterPGV, i,0.);
-    for (std::vector<uint8_t>::const_iterator it=cluster->stripCharges().begin();it<cluster->stripCharges().end();++it) {
+    for (auto it=cluster->stripCharges().begin();it<cluster->stripCharges().end();++it) {
       fillME(iModME->second.ClusterPGV, PGVposCounter++,(*it)/PGVmax);
     }
     for (int i= PGVposCounter;i<int(conf_.getParameter<edm::ParameterSet>("TProfileClusterPGV").getParameter<double>("xmax"));++i)

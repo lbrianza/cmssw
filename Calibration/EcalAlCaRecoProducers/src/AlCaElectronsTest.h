@@ -281,3 +281,5 @@ AlCaElectronsTest::fillAroundEndcap (const EcalRecHitCollection * recHits, int i
     }   
   return ;
 }
+
+DEFINE_FWK_MODULE(AlCaElectronsTest);
