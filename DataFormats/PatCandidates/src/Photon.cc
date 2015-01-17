@@ -280,7 +280,7 @@ void Photon::embedRecHits(const EcalRecHitCollection * rechits) {
 }
 
 // method to retrieve a photon ID (or throw)
-Bool_t Photon::photonID(const std::string & name) const {
+float Photon::photonID(const std::string & name) const {
   for (std::vector<IdPair>::const_iterator it = photonIDs_.begin(), ed = photonIDs_.end(); it != ed; ++it) {
     if (it->first == name) return it->second;
   }

@@ -48,7 +48,7 @@ namespace pat {
 
     public:
 
-      typedef std::pair<std::string,Bool_t> IdPair;
+      typedef std::pair<std::string,float> IdPair;
 
       /// default constructor
       Photon();
@@ -99,7 +99,7 @@ namespace pat {
       // ---- methods for photon ID ----
       /// Returns a specific photon ID associated to the pat::Photon given its name.
       /// Note: an exception is thrown if the specified ID is not available
-      Bool_t photonID(const std::string & name) const;
+      float photonID(const std::string & name) const;
       /// Returns true if a specific ID is available in this pat::Photon
       bool isPhotonIDAvailable(const std::string & name) const;
       /// Returns all the Photon IDs in the form of <name,value> pairs
