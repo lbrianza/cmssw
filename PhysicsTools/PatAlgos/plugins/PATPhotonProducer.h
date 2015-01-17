@@ -113,7 +113,7 @@ namespace pat {
       bool addResolutions_;
       pat::helper::KinResolutionsLoader resolutionLoader_;
 
-      float          addPhotonID_;
+      bool          addPhotonID_;
       typedef std::pair<std::string, edm::InputTag> NameTag;
       std::vector<NameTag> photIDSrcs_;
       std::vector<edm::EDGetTokenT<edm::ValueMap<float> > > photIDTokens_;
