@@ -90,7 +90,7 @@ PATPhotonProducer::PATPhotonProducer(const edm::ParameterSet & iConfig) :
       "\t\tInputTag <someName> = <someTag>   // as many as you want \n " <<
       "\t}\n";
   }
-  photIDTokens_ = edm::vector_transform(photIDSrcs_, [this](NameTag const & tag){return mayConsume<edm::ValueMap<Bool_t> >(tag.second);});
+  photIDTokens_ = edm::vector_transform(photIDSrcs_, [this](NameTag const & tag){return mayConsume<edm::ValueMap<float> >(tag.second);});
   // Resolution configurables
   addResolutions_ = iConfig.getParameter<bool>("addResolutions");
   if (addResolutions_) {
@@ -172,7 +172,7 @@ void PATPhotonProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
     
 
   // prepare ID extraction
-  std::vector<edm::Handle<edm::ValueMap<Bool_t> > > idhandles;
+  std::vector<edm::Handle<edm::ValueMap<float> > > idhandles;
   std::vector<pat::Photon::IdPair>               ids;
   if (addPhotonID_) {
     idhandles.resize(photIDSrcs_.size());
